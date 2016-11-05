@@ -45,7 +45,7 @@ class MovingAverageCrossStrategy(Strategy):
     ):
 
         self.bars = bars
-        self.symbol_list = self.bars.symbo_list
+        self.symbol_list = self.bars.symbol_list
         self.events = events
         self.shortWindow = shortWindow
         self.longWindow = longWindow
@@ -76,10 +76,10 @@ class MovingAverageCrossStrategy(Strategy):
         """
         if event.type == 'MARKET':
             for s in self.symbol_list:
-                bars = self.bars.get_lastest_bar_values(
+                bars = self.bars.get_latest_bars_values(
                     s, "adj_close", N=self.longWindow
                 )
-                bar_date = self.bars.get_lastest_bar_datetime(s)
+                bar_date = self.bars.get_latest_bar_datetime(s)
                 if bars is not None and bars !=[]:
                     shortSma = np.mean(bars[-self.shortWindow:])
                     longSma = np.mean(bars[-self.longWindow:])
@@ -98,7 +98,7 @@ class MovingAverageCrossStrategy(Strategy):
                         #put 把这个signal event加到event query里面
                         self.events.put(signal)
                         self.bought[s] = 'LONG'
-                    elif short_sma < long_sma and self.bought[s] == "LONG":
+                    elif shortSma < longSma and self.bought[s] == "LONG":
                         print("SHORT: %s" % bar_date)
                         sig_dir = 'EXIT'
                         signal = SignalEvent(1, symbol, dt, sig_dir, 1.0)
@@ -113,8 +113,13 @@ if __name__ == "__main__":
     startDate = datetime.datetime(2016, 1, 1, 0, 0, 0)
 
     backtest = Backtest(
-        csv_dir, symbol_list, initial_capital, heartbeat,
-        start_date, HistoricCSVDataHandler, SimulatedExecutionHandler,
+        csv_dir, symbol_list, initial_capital, heartBeat,
+        startDate, HistoricCSVDataHandler, SimulatedExecutionHandler,
         Portfolio, MovingAverageCrossStrategy
     )
+    '''
+
+    execute backtesting
+
+    '''
     backtest.simulate_trading()

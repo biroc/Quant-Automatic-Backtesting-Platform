@@ -27,7 +27,7 @@ class ExecutionHandler(object):
 
         raise NotImplementedError("Should implement execute_order()")
 
-class simulatedExecutionHandler(ExecutionHandler):
+class SimulatedExecutionHandler(ExecutionHandler):
 
     '''
     This Class Convert all order event to fill envent

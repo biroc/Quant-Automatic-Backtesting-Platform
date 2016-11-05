@@ -73,14 +73,14 @@ class DataHandler(object):
 #function 被call的时候，parent class和subclass function的内容都会被返回
 
 class HistoricCSVDataHandler(DataHandler):
-    def __init__(self, events, csv_dir, symbol_list):
+    def __init__(self, events, csv_dir, symbols_list):
         self.events = events
         self.csv_dir = csv_dir
         self.symbol_list = symbols_list
 
         self.symbol_data = {}#返回的dictionary
         self.latest_symbol_data = {}
-        self.continue_backest = True
+        self.continue_backtest = True
         self.bar_index = 0
         #读csv file
         self._open_convert_csv_files()
@@ -119,7 +119,7 @@ class HistoricCSVDataHandler(DataHandler):
             print(self.symbol_data[s]["adj_close"].pct_change())
             self.symbol_data[s]["returns"] = self.symbol_data[s]["adj_close"].pct_change()
             #看下他为什么要返回iterrows的pair模式
-            print(self.symbol_data[s].iterrows()[1])
+            #print(self.symbol_data[s].iterrows())
             self.symbol_data[s] = self.symbol_data[s].iterrows()
 
     #用yield 来返回每个新的bar

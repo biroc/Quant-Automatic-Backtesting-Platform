@@ -68,7 +68,7 @@ class Portfolio(object):
             all_holdings: quantity of symbols' value
 
         '''
-        self.all_positions = self.construct_all_positions
+        self.all_positions = self.construct_all_positions()
 
         #Initial current position
         #build a hash, for all symbol in symbol list
@@ -208,7 +208,7 @@ class Portfolio(object):
         self.current_holdings['cash'] -= (cost + fill.commission)
         self.current_holdings['total'] -= (cost + fill.commission)
 
-    def updated_fill(self,event):
+    def update_fill(self,event):
         """
             Updates the portfolio current positions and holdings
             from a FillEvent.
@@ -234,7 +234,7 @@ class Portfolio(object):
 
         symbol = signal.symbol
         direction = signal.signal_type
-        strength = signal.stength
+        strength = signal.strength
 
 
         #Fixed trading Number
@@ -253,7 +253,7 @@ class Portfolio(object):
             order = OrderEvent(symbol, order_type, abs(cur_quantity), 'BUY')
         return order
 
-    def update_signal(selfself, event):
+    def update_signal(self, event):
         if event.type == 'SIGNAL':
             order_event = self.generate_naive_order(event)
             self.events.put(order_event)
