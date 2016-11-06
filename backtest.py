@@ -81,12 +81,14 @@ class Backtest(object):
 
         """
         i = 0
-        while True:
+        while True and i<10:
             i+=1
-            print('the number of iteration:'+str(i))
+            #print('the number of iteration:'+str(i))
             #update the market bars
             if self.data_handler.continue_backtest ==True:
+                #call 下面这个function,返回bar变量，一个tuple,下个数据
                 self.data_handler.update_bars()
+
             else:
                 break
 
@@ -109,7 +111,7 @@ class Backtest(object):
 
                         elif event.type == 'SIGNAL':
                             self.signals +=1
-                            print(self.signals)
+                            print(str(self.signals)+'dw')
                             self.portfolio.update_signal(event)
 
                         elif event.type == 'ORDER':

@@ -10,14 +10,15 @@ Nov 4 2016
 
 from __future__ import print_function
 
-from abc import ABCMeta, abstractmethod
 import datetime
+from abc import ABCMeta, abstractmethod
 try:
     import Queue as queue
 except ImportError:
     import queue
 
-from event import FillEvent, OrderEvent
+from event import FillEvent
+
 
 class ExecutionHandler(object):
     __metaclass__ = ABCMeta

@@ -8,16 +8,16 @@
 
 import datetime
 import os
-import numpy as np
-import pandas as pd
-import statsmodels.api as sm
 
-from strategy import Strategy
-from event import SignalEvent
+import numpy as np
+
+from lib.data import HistoricCSVDataHandler
+from lib.event import SignalEvent
+from lib.execution import SimulatedExecutionHandler
+from lib.portfolio import Portfolio
+from lib.strategy import Strategy
+
 from backtest import Backtest
-from data import HistoricCSVDataHandler
-from execution import SimulatedExecutionHandler
-from portfolio import Portfolio
 
 
 #######重点#########
@@ -76,6 +76,7 @@ class MovingAverageCrossStrategy(Strategy):
         """
         if event.type == 'MARKET':
             for s in self.symbol_list:
+                #从data handler拿此时此刻的所有数据，存在bars这个variable里
                 bars = self.bars.get_latest_bars_values(
                     s, "adj_close", N=self.longWindow
                 )

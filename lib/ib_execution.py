@@ -8,12 +8,11 @@ from __future__ import print_function
 import datetime
 import time
 
+from event import FillEvent
+from execution import ExecutionHandler
 from ib.ext.Contract import Contract
 from ib.ext.Order import Order
-from ib.opt import ibConnection, message
-
-from event import FillEvent, OrderEvent
-from execution import ExecutionHandler
+from ib.opt import ibConnection
 
 
 class IBExecutionHandler(ExecutionHandler):

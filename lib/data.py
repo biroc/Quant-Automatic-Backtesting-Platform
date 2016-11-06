@@ -79,11 +79,12 @@ class HistoricCSVDataHandler(DataHandler):
         self.symbol_list = symbols_list
 
         self.symbol_data = {}#返回的dictionary
-        self.latest_symbol_data = {}
+        self.latest_symbol_data = {} #用这个dic来保存每一个时刻的symbol data.防止算法用future data
         self.continue_backtest = True
         self.bar_index = 0
         #读csv file
         self._open_convert_csv_files()
+
 
     def _open_convert_csv_files(self):
         #对symbol list里的美一只股票读csv data, convert to dictionary
@@ -116,7 +117,7 @@ class HistoricCSVDataHandler(DataHandler):
                 index=comb_index, method='pad'
             )
             #看下returns columns 给的是什么
-            print(self.symbol_data[s]["adj_close"].pct_change())
+            #print(self.symbol_data[s])
             self.symbol_data[s]["returns"] = self.symbol_data[s]["adj_close"].pct_change()
             #看下他为什么要返回iterrows的pair模式
             #print(self.symbol_data[s].iterrows())
@@ -197,6 +198,7 @@ class HistoricCSVDataHandler(DataHandler):
         for s in self.symbol_list:
             try:
                 bar = next(self._get_new_bar(s))
+                print(bar)
             except StopIteration:
                 self.continue_backtest = False
             else:
